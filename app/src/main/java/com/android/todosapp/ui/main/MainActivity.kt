@@ -2,6 +2,7 @@ package com.android.todosapp.ui.main
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,14 +34,20 @@ class MainActivity : AppCompatActivity() {
             it?.let { resource ->
                 when (resource.status) {
                     Status.SUCCESS -> {
+                        binding.progressBar.visibility = View.GONE
+                        binding.rvList.visibility = View.VISIBLE
                         adapterNote.submitData(resource.data as MutableList<Note>)
                     }
 
                     Status.ERROR -> {
+                        binding.progressBar.visibility = View.GONE
+                        binding.rvList.visibility = View.GONE
                         Log.d("ceknote", "onCreate: error ${it.message}")
                     }
 
                     Status.LOADING -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                        binding.rvList.visibility = View.GONE
                         Log.d("ceknote", "onCreate: loading note")
                     }
                 }

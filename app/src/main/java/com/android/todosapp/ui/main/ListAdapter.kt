@@ -1,12 +1,15 @@
 package com.android.todosapp.ui.main
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.android.todosapp.data.model.Note
 import com.android.todosapp.databinding.ItemNoteBinding
+import com.android.todosapp.ui.detail.DetailActivity
 
 class ListAdapter : RecyclerView.Adapter<ListAdapter.RecentAdapterViewHolder>() {
     inner class RecentAdapterViewHolder(val view: ItemNoteBinding) :
@@ -39,7 +42,11 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.RecentAdapterViewHolder>() 
             txtTitle.text = data.title
             txtContent.text =
                 if (data.completed == true) "Status: Completed" else "Status: Not Completed"
-            root.setOnClickListener { }
+            root.setOnClickListener {
+                val intent = Intent(holder.itemView.context, DetailActivity::class.java)
+                intent.putExtra("id", data.id)
+                holder.itemView.context.startActivity(intent)
+            }
         }
     }
 
